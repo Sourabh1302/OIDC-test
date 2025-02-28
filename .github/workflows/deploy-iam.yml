@@ -20,7 +20,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::339712960538:role/githubOIDC
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/githubOIDC
           aws-region: ap-south-1
           audience: sts.amazonaws.com
 
@@ -38,10 +38,9 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
         env:
-          TF_VAR_aws_account_id: 339712960538
+          TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
         env:
-          TF_VAR_aws_account_id: 339712960538
-
+          TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
